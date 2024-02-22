@@ -1,0 +1,21 @@
+17:19:01 **** Incremental Build of configuration Debug for project gpio_led ****
+make -j12 all 
+arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F4 -DSTM32F405RGTx -c -I../Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/main.o"
+../Src/main.c: In function 'main':
+../Src/main.c:35:9: error: 'AHB1ENR' undeclared (first use in this function); did you mean 'AHB1_ENR'?
+   35 |         AHB1ENR  |= (1<<2); // Port C.
+      |         ^~~~~~~
+      |         AHB1_ENR
+../Src/main.c:35:9: note: each undeclared identifier is reported only once for each function it appears in
+../Src/main.c:47:9: error: 'GPIOB_OTYPER' undeclared (first use in this function); did you mean 'GPIOB_ODR'?
+   47 |         GPIOB_OTYPER &= ~(1<<14);   // PB14 as Push Pull Type.
+      |         ^~~~~~~~~~~~
+      |         GPIOB_ODR
+../Src/main.c:48:9: error: 'GPIOB_OSPEED' undeclared (first use in this function)
+   48 |         GPIOB_OSPEED &= ~(3<<28);  // PB14 as O/P Low Speed
+      |         ^~~~~~~~~~~~
+make: *** [Src/subdir.mk:25: Src/main.o] Error 1
+"make -j12 all" terminated with exit code 2. Build might be incomplete.
+
+17:19:01 Build Failed. 4 errors, 0 warnings. (took 586ms)
+

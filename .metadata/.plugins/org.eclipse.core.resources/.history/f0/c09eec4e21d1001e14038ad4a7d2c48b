@@ -1,0 +1,60 @@
+/**
+ ******************************************************************************
+ * @file           : main.c
+ * @author         : MathiYuvarajan
+ * @Program          : Basic Led Blinking using GPIO
+ *****************************************************************************
+ *
+ ******************************************************************************
+ */
+
+#include <stdint.h>
+
+#if !defined(__SOFT_FP__) && defined(__ARM_FP)
+  #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
+#endif
+
+#define RCC 0x40023800UL
+#define AHB1_ENR *(volatile uint32_t*)(RCC+0x30U) // AHB1 ENR
+#define GPIOB 0x40020400UL
+#define GPIOB_MODER *(volatile uint32_t*)(GPIOB+0x00U) // GPIOB MODER
+#define GPIOB_ODR *(volatile uint32_t*)(GPIOB+0x14U) // GPIOB ODR
+
+#define GPIOC 0x40020800UL
+#define GPIOC_MODER *(volatile uint32_t*)(GPIOC+0x00U) // GPIOC MODER
+#define GPIOC_ODR *(volatile uint32_t*)(GPIOC+0x14U) // GPIOC ODR
+int main(void)
+{
+	// Initialization
+	AHB1_ENR |= (1<<1); // GPIOBLP_ENR
+	AHB1_ENR |= (1<<2); // GPIOCLP_ENR
+
+	//Clear the GPIOB MODER Register
+	GPIOB_MODER &= ~(3<<26); // 13th PIN so MODER13
+    GPIOB_MODER &= ~(3<<28); //14th PIN so MODER 14
+    GPIOB_MODER &= ~(3<<30); //15th PIN so MODER 15
+    GPIOC_MODER &= ~(3<<12); //6th PIN so MODER 6
+
+	//Set the GPIOB MODER Register
+	GPIOB_MODER |= (1<<26);
+	GPIOB_MODER |= (1<<28);
+	GPIOB_MODER |= (1<<30);
+	GPIOC_MODER |= (1<<12);
+
+
+
+	GPIOB_ODR &= (1<<13); // 13th PIN Led OFF
+	//GPIOB_ODR &= (1<<14);  // 14th PIN Led OFF
+	GPIOB_ODR &= (1<<15);  //15th PIN Led OFF
+    GPIOC_ODR &= (1<<6);
+
+	/* Loop forever */
+	for(;;){
+		GPIOB_ODR ^= (1<<13);
+//        GPIOB_ODR ^= (1<<14);
+        GPIOB_ODR ^= (1<<15);
+        GPIOC_ODR ^= (1<<6);
+		//Random Delay
+		for(uint32_t x=0;x<100000;x++);
+	}
+}

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;led_blinking/Inc/gpio&apos; to &apos;gpio.h&apos;" description="Rename resource &apos;gpio&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="Inc/gpio" name="gpio.h" stamp="1708565469197" updateReferences="true"/>
+</session>
